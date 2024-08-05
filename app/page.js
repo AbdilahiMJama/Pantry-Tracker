@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import React, {useState, useEffect} from 'react';
 import {collection, addDoc, getDocs,getDoc, querySnapshot, onSnapshot, query, deleteDoc, setDoc, doc } from "firebase/firestore";
-import {db} from '../firebase'
+import {db} from './firebase'
 
 const style = {
   position: 'absolute',
@@ -116,8 +116,8 @@ export default function Home() {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h4">
