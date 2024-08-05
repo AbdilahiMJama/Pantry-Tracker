@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import React, {useState, useEffect} from 'react';
 import {collection, addDoc, getDocs,getDoc, querySnapshot, onSnapshot, query, deleteDoc, setDoc, doc } from "firebase/firestore";
-import {db} from './firebase'
+import {db} from '../firebase'
 
 const style = {
   position: 'absolute',
