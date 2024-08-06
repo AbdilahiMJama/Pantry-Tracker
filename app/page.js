@@ -35,6 +35,8 @@ export default function Home() {
   const [inventory, setInventory] = useState([])
   const [open, setOpen] = useState(false)
   const [itemName, setItemName] = useState('')
+  const [searchResult, setSearchResult] = useState(null);
+  const [openSearch, setOpenSearch] = useState(false);
  
 
 
@@ -79,24 +81,30 @@ export default function Home() {
     await updateInventory()
   }
 
-  const searchItem = async (item) => {
-    const docRef = doc(collection(db, 'inventory'), item)
-    const docSnap = await getDoc(docRef)
-    if(docSnap.exists()) {
-     return {name: docSnap.id, ...docSnap.data()};
-    } else {
-      return null;
+  const searchItem = async (itemName) => {
+    try {
+      const docRef = doc(collection(db, 'inventory'), itemName);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setSearchResult(docSnap.data());
+      } else {
+        setSearchResult(null); // Item not found
+      }
+    } catch (error) {
+      console.error("Error searching for item: ", error);
+      setSearchResult(null);
     }
-    
-  }
+  };
 
   
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+  const handleOpenSearch = () => setOpenSearch(true);
+  const handleCloseSearch = () => setOpenSearch(false);
   return (
-  <>
-    <AppBar position='static'>
+    <>
+     <AppBar position='static'>
       <Toolbar>
         <Typography variant='h6' component='div' sx = {{flexGrow: 0.92}} textAlign='center'>
             Pantry Tracker
@@ -105,7 +113,7 @@ export default function Home() {
     </AppBar>
     <Box
     width="90vw"
-    height="30vh"
+    height="50vh"
     display={'flex'}
     justifyContent={'center'}
     flexDirection={'column'}
@@ -145,13 +153,52 @@ export default function Home() {
           </Stack>
         </Box>
       </Modal>
+
       <Button variant="outlined" startIcon={<AddIcon/>} onClick={handleOpen}>
         Add New Item
       </Button>
-      <Button variant="outlined" startIcon={<SearchIcon/>} onClick={handleOpen}>
+
+
+      <Modal
+        open={openSearch}
+        onClose={handleCloseSearch}
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h4">
+            Search Item
+          </Typography>
+          <Stack width="100%" direction={'row'} spacing={1}>
+            <TextField
+              id="outlined-basic"
+              label="Item"
+              variant="outlined"
+              fullWidth
+              value={itemName}
+              onChange={(e) => setItemName(e.target.value)}
+            />
+            <Button
+              variant="outlined"
+              onClick={() => {
+                searchItem(itemName)
+                handleCloseSearch()
+              }}
+            >
+             Search
+            </Button>
+          </Stack>
+        </Box>
+      </Modal>
+
+      <Button variant="outlined" startIcon={<SearchIcon/>} onClick={handleOpenSearch}>
         Search Item
       </Button>
     </Box>
+    <Box 
+    width={"60vw"}
+    ml={'20vw'}
+    >
     <TableContainer component={Paper}>
       <Table sx ={{minWidth: 450}} aria-label="simple table">
         <TableHead>
@@ -172,13 +219,12 @@ export default function Home() {
             <TableCell align='right'>
             <Button variant="contained" startIcon={<DeleteIcon/>}onClick={() => removeItem(name)}>Remove</Button>
             </TableCell>
-             
-            
           </TableRow>
         ))}
         </TableBody>
       </Table>
     </TableContainer>
-  </>
+    </Box>
+    </>
   )
 }
