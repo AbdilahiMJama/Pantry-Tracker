@@ -1,5 +1,5 @@
 'use client'
-import {Box, Stack, Typography, Button, Modal, TextField, AppBar, Toolbar} from '@mui/material';
+import {Box, Stack, Typography, Button, Modal, TextField, AppBar, Toolbar, ThemeProvider,createTheme} from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
+//import { ThemeProvider,  } from '@mui/material/styles';
 
 import React, {useState, useEffect} from 'react';
 import {collection, addDoc, getDocs,getDoc, querySnapshot, onSnapshot, query, deleteDoc, setDoc, doc } from "firebase/firestore";
@@ -81,6 +82,7 @@ export default function Home() {
     await updateInventory()
   }
 
+  // Still needs fixing
   const searchItem = async (itemName) => {
     try {
       const docRef = doc(collection(db, 'inventory'), itemName);
@@ -96,6 +98,14 @@ export default function Home() {
     }
   };
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+      primary: {
+        main: '#1976d2',
+      },
+    },
+  });
   
 
   const handleOpen = () => setOpen(true)
@@ -103,7 +113,7 @@ export default function Home() {
   const handleOpenSearch = () => setOpenSearch(true);
   const handleCloseSearch = () => setOpenSearch(false);
   return (
-    <>
+    <ThemeProvider theme={darkTheme}>
      <AppBar position='static'>
       <Toolbar>
         <Typography variant='h6' component='div' sx = {{flexGrow: 0.92}} textAlign='center'>
@@ -113,7 +123,7 @@ export default function Home() {
     </AppBar>
     <Box
     width="90vw"
-    height="50vh"
+    height="40vh"
     display={'flex'}
     justifyContent={'center'}
     flexDirection={'column'}
@@ -225,6 +235,6 @@ export default function Home() {
       </Table>
     </TableContainer>
     </Box>
-    </>
+    </ThemeProvider>
   )
 }
