@@ -3,6 +3,7 @@ import {Box, Container, Grid, Typography, ImageListItem, ImageList} from '@mui/m
 import Head from 'next/head';
 import picnicBasket from '../../public/picnicbasket.jpg';
 import Image from 'next/image';
+import ButtonAppBar from '../components/page';
 //import { ThemeProvider } from '@mui/material/styles'; 
 const itemData = [
     {
@@ -37,6 +38,7 @@ export default function Home() {
         <title>Open Basket</title>
         <meta name="description" content="Open Basket - Your Detailed Pantry Tracking App" />
     </Head>
+    <ButtonAppBar></ButtonAppBar>
     <Box
     my={5}
     textAlign={'center'}
