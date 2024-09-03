@@ -34,8 +34,7 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Open Basket
           </Typography>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">Sign Up</Button>
+          <Button color="inherit">Create</Button>
         </Toolbar>
       </AppBar>
       </ThemeProvider>

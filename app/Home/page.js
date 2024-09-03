@@ -15,21 +15,23 @@ const itemData = [
         title: 'Image',
     },
     {
-        img: '/apple.png',
+        img: '/noodles.png',
         title: 'Image',
     },
     {
-        img: '/milk.png',
+        img: '/chicken.png',
         title: 'Image',
     },
     {
-        img: '/apple.png',
+        img: '/sushi.png',
         title: 'Image',
     },
     {
-        img: '/milk.png',
+        img: '/coffee.png',
         title: 'Image',
     }
+
+
 ]
 export default function Home() {
   return (
